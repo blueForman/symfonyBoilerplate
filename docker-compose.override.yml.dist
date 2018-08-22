@@ -1,0 +1,11 @@
+version: '3.2'
+
+services:
+
+  nginx:
+    ports:
+      - "80:80"
+
+  php:
+    environment:
+      - SYMFONY_ENV=dev
