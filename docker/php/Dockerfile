@@ -1,9 +1,10 @@
-FROM php:7.2.3-fpm-alpine3.7
+FROM php:7.3.6-fpm-alpine3.9
 
 MAINTAINER Marko Vušak <marko.vusak2@gmail.com>
 
 RUN apk update && apk upgrade && \
     apk add --no-cache bash git zlib-dev && \
+    apk add --no-cache --virtual .build-deps  libzip-dev && \
     apk add --no-cache --update --virtual .phpize-deps $PHPIZE_DEPS
 
 RUN pecl channel-update pecl.php.net && \
@@ -18,8 +19,8 @@ RUN echo "xdebug.remote_enable=1"                                               
         echo "xdebug.idekey=PHPSTORM"                                               >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
         echo "xdebug.remote_host=$(/sbin/ip route|awk '/default/ { print $3 }')"    >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
-COPY php-fpm.conf /etc/php/7.2/fpm
-COPY xdebug.ini /etc/php/7.2/mods-available
+COPY php-fpm.conf /etc/php/7.3/fpm
+COPY xdebug.ini /etc/php/7.3/mods-available
 
 RUN addgroup -g 1001 app && \
     adduser -s /bin/sh -DS -u 1001 -G app app
