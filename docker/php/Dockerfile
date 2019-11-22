@@ -22,14 +22,18 @@ RUN echo "xdebug.remote_enable=1"                                               
 COPY php-fpm.conf /etc/php/7.3/fpm
 COPY xdebug.ini /etc/php/7.3/mods-available
 
-RUN addgroup -g 1001 app && \
-    adduser -s /bin/sh -DS -u 1001 -G app app
+RUN addgroup -g 1000 app && \
+    adduser -s /bin/sh -DS -u 1000 -G app app
 
 # Composer
 RUN curl -sS https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer && \
     chmod +x /usr/local/bin/composer
 
+RUN mkdir -m777 -p ~/app/var && \
+    mkdir -m777 -p ~/app/vendor
+
 USER app
 WORKDIR /app
+
 CMD  ["php-fpm", "-F"]

@@ -2,4 +2,5 @@
 var/*
 vendor/*
 .env
+volumes/*
 docker-compose.override.yml
