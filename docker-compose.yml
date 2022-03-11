@@ -11,7 +11,7 @@ services:
         - ./:/app
 
   database:
-      image: mysql:5.7
+      image: mysql:8.0
       hostname: database
       volumes:
         - ./volumes/docker/mysql:/var/lib/mysql
